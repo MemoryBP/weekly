@@ -1,4 +1,6 @@
-Alt+回车 导入包,自动修正
+* psvm:main函数
+
+* Alt+回车 导入包,自动修正
 Ctrl+N   查找类
 Ctrl+Shift+N 查找文件
 Ctrl+Alt+L  格式化代码
