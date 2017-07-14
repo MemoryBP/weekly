@@ -25,6 +25,15 @@ public class ScheduledTasks {
     public void reportCurrentByCron(){
         System.out.println ("Scheduling Tasks Examples By Cron: The time is now " + dateFormat ().format (new Date()));
     }
+    @Scheduled(cron = "0 0 12 ? * *")
+    public void eat(){
+        System.out.println ("eat " + dateFormat ().format (new Date()));
+    }
+
+    @Scheduled(cron = "0 0 13 ? * *")
+    public void work(){
+        System.out.println ("上班了!!!! " + dateFormat ().format (new Date()));
+    }
 
     private SimpleDateFormat dateFormat(){
         return new SimpleDateFormat ("yyyy/MM/dd HH:mm:ss");
