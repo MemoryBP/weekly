@@ -6,6 +6,7 @@ import javassist.bytecode.ConstPool;
 import javassist.bytecode.FieldInfo;
 import javassist.bytecode.MethodInfo;
 import javassist.bytecode.annotation.Annotation;
+import javassist.bytecode.annotation.LongMemberValue;
 import javassist.bytecode.annotation.StringMemberValue;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -82,5 +83,43 @@ public class WeeklyApplicationTests {
 		String text = ((StringMemberValue)annotation2.getMemberValue("unitName")).getValue();
 
 		System.out.println("修改后的注解名称===" + text);
+	}
+
+	@Test
+	public void aetTestCaseAtrributes() throws NotFoundException {
+
+		ClassPool pool = ClassPool.getDefault();
+		// 获取需要修改的类
+		CtClass ct = pool.get("com.example.demo.until.ScheduledTasks");
+		// 获取类里的所有方法
+		CtMethod[] cms = ct.getDeclaredMethods();
+		for (CtMethod cm : cms) {
+			System.out.println("方法名称====" + cm.getName());
+
+			MethodInfo methodInfo = cm.getMethodInfo();
+
+			AnnotationsAttribute attribute = (AnnotationsAttribute) methodInfo
+					.getAttribute(AnnotationsAttribute.visibleTag);
+			System.out.println(attribute);
+
+			ConstPool cPool = methodInfo.getConstPool();
+
+			AnnotationsAttribute attribute2 = new AnnotationsAttribute(cPool, AnnotationsAttribute.visibleTag);
+			Annotation[] anns= attribute2.getAnnotations();
+			for(Annotation ann:anns){
+				System.out.println(ann.getTypeName());
+			}
+			Annotation annotation = new Annotation("org.springframework.scheduling.annotation.Scheduled", cPool);
+			annotation.addMemberValue("invocationCount", new LongMemberValue(10L, cPool));
+			attribute2.setAnnotation(annotation);
+			methodInfo.addAttribute(attribute2);
+
+			Annotation annotation2 = attribute2.getAnnotation("org.springframework.scheduling.annotation.Scheduled");
+			long text = ((LongMemberValue) annotation2.getMemberValue("invocationCount")).getValue();
+			attribute = (AnnotationsAttribute) methodInfo.getAttribute(AnnotationsAttribute.visibleTag);
+
+			System.out.println(attribute);
+			System.out.println(text);
+		}
 	}
 }
