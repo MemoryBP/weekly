@@ -10,7 +10,7 @@ import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 /**
  * Created by 陈 on 2017/7/10.
  */
-@Configuration
+/*@Configuration*/
 public class SchedledConfiguration {
     // 配置中设定了
     // ① targetMethod: 指定需要定时执行scheduleInfoAction中的simpleJobTest()方法

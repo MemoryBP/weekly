@@ -1,0 +1,2 @@
+QuartzConfig:
+  cronValue: 0/5 * *  * * *
